@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+    margin: 0px;
+    box-sizing: border-box;
+    padding: 0px;
+    font-size: 25px;
+    font-weight: bolder;
+    user-select: none;
+
+}
+    </style>
+
+</head>
+<body>
+        
+           
+ <script>
+     //window.onbeforeunload = "false";
+
+//function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
+
+
+
+const body = document.body;
+//body.onkeydown ="return (event.keyCode != 116)"
+const frame = document.createElement("div");
+frame.id = "frame";
+frame.style.position = "relative";
+frame.style.width = "500px";
+frame.style.height = "600px";
+frame.style.backgroundColor = "rgba(24, 0, 0, 0.86)";
+frame.style.boxSizing = "border-box";
+body.appendChild(frame);
+
+/*****************************popup -  yeniden baslama duymesi */
+const popup = document.createElement("div");
+popup.id = "popup";
+popup.style.position = "absolute";
+popup.style.zIndex = "-1";
+popup.style.backgroundColor = "rgba(205, 92, 212, 0.9)";
+popup.style.width = "100%";
+popup.style.height = "100%";
+popup.style.display = "flex";
+popup.style.justifyContent = "center";
+popup.style.alignItems = "center";
+frame.appendChild(popup);
+
+const renewButton = document.createElement("div");
+renewButton.id = "renewButton";
+renewButton.style.backgroundColor = "yellow";
+renewButton.innerHTML = "<b>Yeniden basla</b>";
+renewButton.style.width = "200px";
+renewButton.style.height = "50px";
+renewButton.style.borderRadius = "25px";
+renewButton.style.textAlign = "center";
+renewButton.style.padding = "8px";
+renewButton.style.cursor = "pointer";
+
+renewButton.style.float = "center";
+popup.appendChild(renewButton);
+
+
+
+
+renewButton.onclick = () => {
+
+    popup.style.zIndex = "-1";
+    document.location.reload(true);
+    
+}
+
+const frameElement = document.createElement("div");
+frameElement.id = "frameElement";
+frameElement.style.width = "500px";
+frameElement.style.height = "500px";
+frameElement.style.padding = "10px 0px";
+frameElement.style.display = "flex";
+frameElement.style.flexWrap = "wrap";
+frameElement.style.justifyContent = "center";
+//frameElement.style.backgroundColor = "rgba(43, 0, 33, 0.86)";
+frame.appendChild(frameElement);
+
+
+for (var i = 0; i < 9; i++) {
+    for (var j = 0; j < 9; j++) {
+        const element = document.createElement("div");
+        element.style.height = "50px";
+        element.style.backgroundColor = "#F6F2E3";
+        element.style.textAlign = "center";
+        element.style.margin = "1px";
+        element.style.border = "3px solid grey";
+        element.style.borderRadius = "5px";
+        element.style.padding = "8px 0px";
+        element.style.width = "50px";
+        element.id = `${i + 1}${j + 1}`;
+        element.className = "element";
+        element.style.cursor = "pointer";
+        frameElement.appendChild(element);
+        console.table(element.id);
+    }
+}
+
+for (var i = 1; i <= 9; i++) {
+    for (var j = 1; j <= 9; j++) {
+
+        if (i % 3 == 0) {
+            document.getElementById(`${i}${j}`).style.marginBottom = "8px";
+        }
+        if (j % 3 == 0) {
+            document.getElementById(`${i}${j}`).style.marginRight = "8px";
+        }
+    }
+}
+const reqemler = document.createElement("div");
+reqemler.id = "reqemler";
+reqemler.style.width = "500px";
+reqemler.style.height = "100px";
+reqemler.style.display = "flex";
+reqemler.style.justifyContent = "space-evenly";
+reqemler.style.flexWrap = "wrap";
+//reqemler.style.border = "1px solid black";
+reqemler.style.flexDirection = "row";
+reqemler.style.alignItems = "center";
+frame.appendChild(reqemler);
+
+for (var i = 1; i <= 9; i++) {
+    const reqem = document.createElement("div");
+    reqem.style.width = "50px";
+    reqem.style.height = "50px";
+    reqem.style.padding = "10px 0px";
+    reqem.style.textAlign = "center"
+    reqem.style.borderRadius = "25px";
+    //reqem.style.marginTop = "5px";
+    reqem.style.backgroundColor = "white";
+    reqem.id = i;
+    reqem.innerHTML = i;
+    reqem.style.cursor = "pointer";
+    reqem.className = "reqem";
+    reqemler.appendChild(reqem);
+}
+/*********************refresh button **********************/
+const refresh = document.createElement("div");
+refresh.style.width = "200px";
+refresh.style.height = "35px";
+refresh.style.borderRadius = "20px";
+refresh.style.textAlign = "center";
+refresh.style.paddingTop = "4px";
+refresh.innerHTML = "Yeni Oyun/dblc";
+refresh.style.backgroundColor = "white";
+refresh.style.cursor = "pointer";
+reqemler.appendChild(refresh);
+refresh.onmouseover = () => {
+    refresh.style.transition = "0.5s";
+    refresh.style.backgroundColor = "yellow";
+}
+refresh.onmouseout = () => {
+    refresh.style.transition = "0.5s";
+    refresh.style.backgroundColor = "grey";
+}
+
+
+refresh.ondblclick = () => {
+    window.location.reload();
+}
+
+const info = document.createElement("div");
+info.innerHTML = '<span><i  style="font-size:10px; color:white;">xananı təmizləmək üçün DBLCLICK</i></span>'
+reqemler.appendChild(info);
+
+var selectedNumber = "";
+var idToIndex = [];
+var selectedElement = "";
+var saygac = 0;
+
+
+    
+        
+/******************************** Reqem reng deyismesi *******************/
+for(var i=1;i<=9;i++){
+    document.getElementById(i).onclick = e => {
+    selectedNumber = e.target.id;
+    if(selectedElement!=""){
+        document.getElementById(selectedElement).innerHTML = selectedNumber;
+        document.getElementById(selectedElement).style.backgroundColor = "#96F2E3";
+        document.getElementById(selectedElement).className = "changed";
+
+    idToIndex = selectedElement.split("");
+    for(var i=0;i<2;i++){
+    idToIndex[i] = Number(idToIndex[i]);}
+    
+    if(array[idToIndex[0]-1][idToIndex[1]-1]!=selectedNumber){
+        saygac++;
+        console.log("saygac  "+ saygac);
+    }
+    if(saygac == 5){
+        popup.style.zIndex = "1";
+    }
+        selectedElement = "";  
+    }
+
+    }
+
+    document.getElementById(i).onmouseover = e => {
+        e.target.style.backgroundColor = "#20F7B0";
+        e.target.style.transition = "1s";
+    }
+    document.getElementById(i).onmouseout = e => {
+
+        e.target.style.backgroundColor = "white";
+        e.target.style.transition = "1s";
+    }
+
+}
+/***************** xananin secilmesi *************/
+for(var i=1;i<=9;i++){
+    for(var j=1;j<=9;j++){
+        document.getElementById(`${i}${j}`).onclick = e => {
+            if(e.target.innerHTML == ""){
+                if(selectedElement!=""){
+                    document.getElementById(selectedElement).style.backgroundColor = "#F6F2E3";
+                }
+                selectedElement = e.target.id;
+                e.target.style.backgroundColor = "red";
+                         e.target.style.transition = "0.5s";
+        }    
+    }
+    document.getElementById(`${i}${j}`).ondblclick = e => {
+        if((e.target.className == "changed")&&(e.target.innerHTML!="")){
+            e.target.innerHTML = "";
+            e.target.style.backgroundColor = "#F6F2E3";
+
+        } 
+        else if(e.target.innerHTML=="") {
+            e.target.style.backgroundColor = "#F6F2E3";
+            selectedElement = "";
+        }      
+    }
+}    
+}
+
+
+// MASSIVIN QURULMASI 9X9
+var array1 = [];
+var array = [];
+var y = 1;
+var x = 0;
+for (var i = 0; i < 9; i++) {
+    for (var j = 0; j < 9; j++) {
+        array[i] = [];
+        array1[i] = [];
+    }
+}
+
+for (var i = 1; i <= 9; i++) {
+    if (y > 9) { y -= 8 }
+    x = y;   
+    for (var j = 1; j <= 9; j++) {
+        array[i - 1][j - 1] = x;
+        x++
+        if (x > 9) { x = 1 }
+    }           
+    y += 3;
+}
+//*********************************************************************
+
+function yerdeyisme(massiv){
+
+    function cergeDeyisme(f) {
+
+        var b = 0;
+        var c = 0;
+        var d = 0;
+        var arrayDeyisme = [];
+    
+        function setirDeyisme(a) {
+            var x = 0;
+            for (var i = 0; i < 3; i++) {
+                b = Math.floor(Math.random() * 3);
+                c = Math.floor(Math.random() * 3);
+                d = Math.floor(Math.random() * 3);
+    
+                b += x;
+                c += x;
+                d += x;
+                if (b != c) {
+                    for (var j = 0; j < 9; j++) {
+                        arrayDeyisme[j] = a[b][j];
+                        a[b][j] = a[c][j];
+                        a[c][j] = arrayDeyisme[j];
+                        
+                    }
+                };
+                if (b != d) {
+                    for (var j = 0; j < 9; j++) {
+                        arrayDeyisme[j] = a[b][j];
+                        a[b][j] = a[d][j];
+                        a[d][j] = arrayDeyisme[j];
+                       
+                    }
+                }
+                x += 3;
+            }
+        }
+    
+    
+        function sutunDeyisme(a) {
+            var x = 0;
+            for (var i = 0; i < 3; i++) {
+    
+                b = Math.floor(Math.random() * 3);
+                c = Math.floor(Math.random() * 3);
+                d = Math.floor(Math.random() * 3);
+                b += x;
+                c += x;
+                d += x;
+                if (b != c) {
+                    for (var j = 0; j < 9; j++) {
+    
+                        arrayDeyisme[j] = a[j][b];
+                        a[j][b] = a[j][c];
+                        a[j][c] = arrayDeyisme[j];
+                       
+                    }
+                }
+                if (b != d) {
+                    for (var j = 0; j < 9; j++) {
+                        arrayDeyisme[j] = a[j][b];
+                        a[j][b] = a[j][d];
+                        a[j][d] = arrayDeyisme[j];
+                       
+                    }
+                }
+    
+                x += 3;
+            }
+        }
+        sutunDeyisme(f);
+        setirDeyisme(f);
+    
+    }
+//  MUMKUN SETIR-SUTUN DEYISMELERI(RANDOM)
+
+//************************************************************************
+// MUMKUN BLOK DEYISMELERI (RANDOM)
+function blokDeyisme(f) {
+    var b = 0;
+    var c = 0;
+    var d = 0;
+    var e = 0;
+    var g = 0;
+    var array3 = [];
+    var array3_1 = []
+    for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 9; j++) {
+            array3[i] = [];
+            array3_1[i] = [];
+        }
+    }
+
+    function setirBlokDeyisme(a) {
+        b = 3 * Math.floor(Math.random() * 3);
+        c = 3 * Math.floor(Math.random() * 3);
+        d = 3 * Math.floor(Math.random() * 3);
+
+        if (b != c) {
+            e = 0;
+            g = b;
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < 9; j++) {
+                    array3[e][j] = a[g][j];
+                    a[g][j] = a[c][j];
+                    a[c][j] = array3[e][j];
+                    
+                }
+                e++;
+                g++;
+                c++;
+            }
+
+        }
+        if (b != d) {
+            e = 0;
+            g = b;
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < 9; j++) {
+                    array3[e][j] = a[g][j];
+                    a[g][j] = a[d][j];
+                    a[d][j] = array3[e][j];
+                    
+                }
+                e++;
+                g++;
+                d++;
+            }
+
+        }
+
+
+    }
+
+    function sutunBlokDeyisme(a) {
+        b = 3 * Math.floor(Math.random() * 3);
+        c = 3 * Math.floor(Math.random() * 3);
+        d = 3 * Math.floor(Math.random() * 3);
+        if (b != c) {
+            e = 0;
+            g = b;
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < 9; j++) {
+                    array3[e][j] = a[j][g];
+                    a[j][g] = a[j][c];
+                    a[j][c] = array3[e][j];
+                   
+                }
+                e++;
+                g++;
+                c++;
+            };
+
+        }
+        if (b != d) {
+            e = 0;
+            g = b;
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < 9; j++) {
+                    array3[e][j] = a[j][g];
+                    a[j][g] = a[j][d];
+                    a[j][d] = array3[e][j];
+                   
+                }
+                e++;
+                g++;
+                d++;
+            }
+
+        }
+    }
+    setirBlokDeyisme(f);
+    sutunBlokDeyisme(f);
+
+}
+//*************************************************************************
+
+//MUMKUN REQEM DEYISMELERI (RANDOM)
+
+function reqemDeyisme(f) {
+
+    var a = [];
+    
+    
+    for(var i=0;i<9;i++){
+        a[i] = Math.ceil(Math.random()*9);
+        
+    }
+
+    var length = a.length;
+    for(var i=0;i<length-1;i++){
+       for(var j=i+1;j<length;j++){
+           if(a[i]==a[j]){
+               a.splice(j,1);
+               j--;
+               length = a.length;
+           }         
+       }
+    }
+
+    if(a.length%2!=0){
+        a.splice(length-1,1);
+    }
+    var k = 0;
+    console.log(a);
+    while(k<a.length){
+        
+        for(var i=0;i<9;i++){
+            for(var j=0;j<9;j++){
+    
+                if(f[i][j]==a[k]){
+                    f[i][j] = a[k+1]; 
+                }
+                else if(f[i][j]==a[k+1]){
+                    f[i][j] = a[k];
+                }
+              
+            }
+        }
+        k +=2;
+    }
+    
+}
+//*********************************************************************
+
+reqemDeyisme(massiv);
+cergeDeyisme(massiv);
+blokDeyisme(massiv);
+}
+
+
+
+//  gorunecek elementlerin massivi
+// for(var i=0;i<9;i++){
+//     for(var j=0;j<9;j++){
+// array1[i][j] = array[i][j];
+//     }}
+console.table(array)
+    yerdeyisme(array);
+    console.table(array)
+for(var i=0;i<9;i++){
+    for(var j=0;j<9;j++){
+        if(i==4-j||j==12-i||(i==j&&i!=4)||(i==8-j&&i>0&&i!=4)||(i==2&&j==3)||(i==3&&j==8)||(i==0&&j==2)||(i==7&&j==2)||(i==8&&j==6)){
+            array1[i][j] = array[i][j];
+        }
+        else{
+            array1[i][j] = "";
+        }
+    }
+}
+
+
+
+console.table(array1);
+console.log(idToIndex);
+
+//  XANALARA YAZMA
+
+for (var i = 1; i <= 9; i++) {
+    for (var j = 1; j <= 9; j++) {
+        document.getElementById(`${i}${j}`).innerHTML = array1[i - 1][j - 1];
+        if(document.getElementById(`${i}${j}`).innerHTML != ""){
+            document.getElementById(`${i}${j}`).style.backgroundColor = "#F7C920";
+
+        }
+    }
+}
+
+//***********************************************************************
+
+
+
+
+
+ </script>
+</body>
+</html>
